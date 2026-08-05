@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-84RK4S7EN4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-84RK4S7EN4');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puppy Adult Weight Estimator</title>
+    <meta name="description" content="Puppy Weight Estimator: Use our puppy weight estimator to predict how big your furry friend will get!">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
+</head>
+<body>
+    <div class="container">
+        <!-- Left Ad Slot -->
+        <div id="ad-left1" class="box">
+            <a href="https://28177pl7kvxklyp649rhz10c6a.hop.clickbank.net/?&traffic_source=001"><img decoding="async" src="img/genius-300x600-a.gif" alt="Genius Dog 300 x 600 - Animated" /></a>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <div id="content">
+            <header>
+                <h1>
+                    Puppy Weight Estimator
+                </h1>
+            </header>
+            <img src="img/puppy-to-adult.jpeg" alt="Puppy Weight Estimator" style="max-width: 70%; height: auto;">
+            <!-- Input View -->
+            <div id="input-view">
+                
+
+    <div class="form-container">
+        <p>
+            Use our puppy weight estimator to predict how big your furry friend will get! This easy-to-use tool considers your puppy's current weight and breed to provide an estimated adult weight range. Knowing your puppy's expected size helps you plan for their needs. Try our accurate puppy weight estimator now!
+        </p><br>
+        <div class="input-group">
+            <label for="breed">Breed:</label>
+            <select id="breed"></select>
+        </div>
+        <div class="input-group">
+            <label for="ageWeeks">Current Age (weeks):</label>
+            <input type="number" id="ageWeeks" placeholder="e.g., 12" min="4" step="1">
+        </div>
+         <div class="input-group">
+            <label>Gender:</label>
+            <div class="radio-group">
+                <input type="radio" id="genderMale" name="gender" value="male" checked>
+                <label for="genderMale">Male</label>
+                <input type="radio" id="genderFemale" name="gender" value="female">
+                <label for="genderFemale">Female</label>
+            </div>
+        </div>
+        <div class="input-group">
+            <label for="currentWeight">Current Weight:</label>
+            <input type="number" id="currentWeight" placeholder="e.g., 5" step="0.1" min="0">
+            <select id="weightUnit" style="margin-left: 10px; flex-grow: 0; min-width: 60px;">
+                <option value="lb">lb</option>
+                <option value="kg">kg</option>                
+            </select>
+        </div>
+        <button id="calculateBtn">Estimate & Plot Growth</button>
+    </div>
+
+    <div class="results-container">
+        <h2>- Estimation Results -</h2>
+        <div id="resultText">
+            Enter details above to get an estimation.
+        </div>
+        <div id="chartContainer" style="display: none;">
+             <canvas id="growthChart"></canvas>
+        </div>
+         <p class="disclaimer">
+            <strong>Disclaimer:</strong> This Puppy Weight Estimator tool provides a rough estimate based on average breed data and a simplified growth model. Actual adult weight can vary significantly due to genetics, diet, health, and individual variation. Consult your veterinarian for the best estimate of your puppy's growth. The chart band represents a common range, not guaranteed limits.
+        </p>
+    </div>
+    <style>
+        /* Basic Reset & Dark Theme */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+    
+        #explanation {
+            width: 500px;
+            max-width: 80%;
+            font-size:12pt;
+            color: #aaaaff;
+        }
+        
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px; /* Max width for desktop */
+            position: relative; /* Needed for absolute positioning of ads */
+            padding-top: 15px;
+        }
+        img {
+            border:#3c8532;
+            border-style: solid;
+        }
+
+        /* Ad Slot Styling */
+        .box {
+            /*background-color: #2a2a4a;*/ /* Slightly lighter dark */
+            /* border: 1px dashed #5a5a7a; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fdfbfb;
+            background-color: #f9f9f9;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        #ad-left1, #ad-right1 {
+            width: 300px; /* Standard ad width */
+            height: 606px; /* Standard ad height */
+            position: sticky; /* Stick to viewport within container */
+            top: 20px;
+        }
+        #ad-left1 { order: 1; } /* Left column */
+        #ad-right1 { order: 3; } /* Right column */
+
+        #ad-bottom1 {
+            width: 400px; /* Standard is 728 */
+            max-width: fit-content;
+            margin: 30px auto 0; /* Centered below content */
+            clear: both; /* Ensure it's below floated/flexed items if needed */
+            display: block; /* ADD THIS: Hide by default on wider screens */
+
+        }
+
+        /* Content Area */
+        #content {
+            flex-grow: 1; /* Takes remaining space */
+            padding: 20px;
+            text-align: center;
+            max-width: 600px; /* Limit content width */
+            margin: 0 auto; /* Center content between side ads */
+            order: 2; /* Middle column */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0;
+        }
+        #terms, p, li  {
+            padding: 3px;
+            text-align: center;
+            max-width: 600px; /* Limit content width */
+            display: block;
+            align-items: center;
+            color:#64b3af;
+            font-size: 0.9em;
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+
+ 
+        a:-webkit-any-link {
+            color: rgb(89, 238, 139);
+            cursor: pointer;
+            text-decoration:underline;
+        }
+        #input-view {
+            color:#aaaaff;
+        }
+        /* Input View */
+        #input-view h2 {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+        }
+        #input-view
+        .time-selector-container {
+            background-color: #1a1a3a;
+            border: 1px solid #3a3a5a;
+            border-radius: 8px;
+            padding: 20px;
+            display: inline-flex; /* Use inline-flex for horizontal alignment */
+            align-items: center; /* Vertically align items */
+            gap: 10px; /* Space between selects */
+            margin-bottom: 30px;
+        }
+
+        
+
+        button {
+            background-color: #f0e68c; /* Khaki / Light Yellow */
+            color: #333;
+            border: none;
+            margin-left: 6px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background-color: #e6d971;
+        }
+
+        #input-view p {
+            margin-top: 30px;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+
+        /* Results View */
+        #bedtime-results-view, #wakeup-results-view {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 95%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .form-container, .results-container {
+            background-color: #fff;
+            padding: 25px;
+            padding-top:0px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+        }
+        .input-group {
+            margin-bottom: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+            flex-basis: 150px; /* Fixed width for labels */
+        }
+        input[type="number"],
+        select {
+            flex-grow: 1; /* Allow inputs to take remaining space */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            min-width: 100px; /* Minimum width */
+        }
+         input[type="number"] {
+            -webkit-appearance: none;
+            margin: 0;
+             -moz-appearance: textfield;
+        }
+        .radio-group label {
+            flex-basis: auto; /* Override fixed width for radio labels */
+            margin-right: 15px;
+            font-weight: normal;
+        }
+        .radio-group input[type="radio"] {
+           margin-right: 5px;
+           vertical-align: middle;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #resultText {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1.1em;
+            min-height: 40px;
+            color: #495057;
+        }
+         #chartContainer {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            height: 350px;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+            text-align: center;
+        }
+        .disclaimer {
+            font-size: 0.85em;
+            color: #6c757d;
+            text-align: center;
+            margin-top: 15px;
+            padding: 0 15px;
+        }
+
+
+        /* Responsiveness */
+        @media (max-width: 1220px) {
+             #ad-left1, #ad-right1 {
+                 display: none; /* Hide side ads on smaller screens */
+             }
+             #content {
+                 margin: 0 10px; /* Add some horizontal margin */
+                 max-width: 100%;
+             }
+             #ad-bottom {
+                 display: block; /* Show bottom ad */
+                 width: 90%; /* Adjust width */
+                 max-width: 728px;
+                 height: auto; /* Adjust height if needed */
+                 min-height: 50px;
+             }
+             .container {
+                 flex-direction: column; /* Stack content and bottom ad */
+             }
+             #content { order: 1; } /* Content first */
+        }
+
+         @media (max-width: 480px) {
+             header h1 {
+                 font-size: 2em;
+             }
+             .time-selector-container select {
+                 font-size: 1.2em;
+                 padding: 8px 23px;
+             }
+             .suggested-times {
+                 gap: 10px;
+             }
+             .time-option {
+                 padding: 10px 15px;
+                 min-width: 100px;
+             }
+             .time-option span {
+                 font-size: 1.1em;
+             }
+             #alarm-popup {
+                 width: 90%;
+                 padding: 20px;
+             }
+             #countdown-timer {
+                 font-size: 1.5em;
+             }
+         }
+
+        /* Utility Class */
+        .hidden {
+            display: none !important; /* Use !important to override other display rules */
+        }
+
+    </style>
+    <script>
+        const KG_TO_LB = 2.20462;
+        const LB_TO_KG = 0.453592;
+        const GROWTH_PERIOD_CAP = 65; // Cap weeks used in linear projection (helps giant breeds)
+        const CHART_RANGE_FACTOR = 0.15; // +/- 15% for the chart band/range
+
+        // Simplified Breed Data (Name, Avg Male Adult kg, Avg Female Adult kg, Approx Weeks to Adult Size)
+        const breedData = {
+            // Same data as before - omitted for brevity
+             "Chihuahua": { name: "Chihuahua", maleKg: 2.5, femaleKg: 2.2, weeks: 45, size: "Toy" },
+            "Yorkshire Terrier": { name: "Yorkshire Terrier", maleKg: 3.0, femaleKg: 2.8, weeks: 48, size: "Toy" },
+            "Shih Tzu": { name: "Shih Tzu", maleKg: 6.5, femaleKg: 6.0, weeks: 52, size: "Small" },
+            "French Bulldog": { name: "French Bulldog", maleKg: 11.5, femaleKg: 10.5, weeks: 55, size: "Small" },
+            "Beagle": { name: "Beagle", maleKg: 12.5, femaleKg: 11.5, weeks: 60, size: "Medium" },
+            "Border Collie": { name: "Border Collie", maleKg: 18.0, femaleKg: 16.0, weeks: 65, size: "Medium" },
+            "Australian Shepherd": { name: "Australian Shepherd", maleKg: 25.0, femaleKg: 20.0, weeks: 70, size: "Medium" },
+            "Labrador Retriever": { name: "Labrador Retriever", maleKg: 32.0, femaleKg: 28.0, weeks: 78, size: "Large" },
+            "Golden Retriever": { name: "Golden Retriever", maleKg: 32.0, femaleKg: 29.0, weeks: 78, size: "Large" },
+            "German Shepherd": { name: "German Shepherd", maleKg: 36.0, femaleKg: 30.0, weeks: 90, size: "Large" },
+            "Rottweiler": { name: "Rottweiler", maleKg: 52.0, femaleKg: 43.0, weeks: 95, size: "Large/Giant" },
+            "Bernese Mountain Dog": { name: "Bernese Mountain Dog", maleKg: 48.0, femaleKg: 40.0, weeks: 104, size: "Giant" },
+            "Great Dane": { name: "Great Dane", maleKg: 68.0, femaleKg: 58.0, weeks: 104, size: "Giant" },
+            "Newfoundland": { name: "Newfoundland", maleKg: 65.0, femaleKg: 55.0, weeks: 110, size: "Giant" },
+            "Mixed - Toy (under 5kg)": { name: "Mixed - Toy", maleKg: 4, femaleKg: 3.5, weeks: 48, size: "Toy" },
+            "Mixed - Small (5-10kg)": { name: "Mixed - Small", maleKg: 8, femaleKg: 7, weeks: 52, size: "Small" },
+            "Mixed - Medium (10-25kg)": { name: "Mixed - Medium", maleKg: 18, femaleKg: 16, weeks: 65, size: "Medium" },
+            "Mixed - Large (25-45kg)": { name: "Mixed - Large", maleKg: 35, femaleKg: 30, weeks: 85, size: "Large" },
+            "Mixed - Giant (over 45kg)": { name: "Mixed - Giant", maleKg: 55, femaleKg: 50, weeks: 104, size: "Giant" }
+        };
+
+        const breedSelect = document.getElementById('breed');
+        const ageWeeksInput = document.getElementById('ageWeeks');
+        const currentWeightInput = document.getElementById('currentWeight');
+        const weightUnitSelect = document.getElementById('weightUnit');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resultTextDiv = document.getElementById('resultText');
+        const chartContainer = document.getElementById('chartContainer');
+        const canvas = document.getElementById('growthChart');
+        let growthChart = null;
+
+        function populateBreeds() {
+             const sortedBreeds = Object.keys(breedData).sort();
+             // Clear existing options first
+             breedSelect.innerHTML = '<option value="" disabled selected>-- Select Breed --</option>';
+            sortedBreeds.forEach(key => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = breedData[key].name;
+                breedSelect.appendChild(option);
+            });
+        }
+
+        // Gets the *shape* of the growth curve (0 to 1)
+        // Returns estimated proportion of adult weight achieved at a given age for chart plotting
+        function getChartProportion(currentWeeks, totalWeeksToAdult) {
+            if (currentWeeks <= 0 || totalWeeksToAdult <= 0) return 0;
+            // Ensure proportion doesn't exceed 1 even if currentWeeks > totalWeeksToAdult
+            const effectiveWeeks = Math.min(currentWeeks, totalWeeksToAdult);
+
+            // Using sqrt curve for non-linear shape. Add 1 to avoid sqrt(0).
+            // Normalize against the sqrt of the *total* period.
+            const proportion = Math.sqrt(effectiveWeeks + 1) / Math.sqrt(totalWeeksToAdult + 1);
+
+            return Math.min(proportion, 1.0); // Cap at 100%
+        }
+
+
+        function calculateAndPlot() {
+            resultTextDiv.textContent = '';
+            resultTextDiv.classList.remove('error');
+            chartContainer.style.display = 'none';
+
+            // --- Get Inputs ---
+            const selectedBreedKey = breedSelect.value;
+            const ageWeeks = parseInt(ageWeeksInput.value);
+            const currentWeightRaw = parseFloat(currentWeightInput.value);
+            const weightUnit = weightUnitSelect.value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+
+            // --- Validate Inputs ---
+             if (!selectedBreedKey || isNaN(ageWeeks) || ageWeeks < 4 || isNaN(currentWeightRaw) || currentWeightRaw <= 0) {
+                resultTextDiv.textContent = 'Please select a breed and fill in all fields with valid values (Age >= 4 weeks, Weight > 0).';
+                resultTextDiv.classList.add('error');
+                return;
+            }
+
+            // --- Data Preparation ---
+            const breedInfo = breedData[selectedBreedKey];
+            const currentWeightKg = (weightUnit === 'lb') ? currentWeightRaw * LB_TO_KG : currentWeightRaw;
+            const weeksToAdult = breedInfo.weeks;
+
+             if (currentWeightKg <= 0) {
+                 resultTextDiv.textContent = 'Current weight must be positive.';
+                 resultTextDiv.classList.add('error');
+                 return;
+            }
+             if (ageWeeks > weeksToAdult + 26) {
+                 resultTextDiv.textContent = `Puppy age (${ageWeeks} weeks) is significantly beyond the typical adult age for ${breedInfo.name}. Estimation is less relevant.`;
+            }
+
+            // --- Calculate Estimated Adult Weight ---
+            // (Calculation logic remains the same)
+            const effectiveGrowthWeeks = Math.min(weeksToAdult, GROWTH_PERIOD_CAP);
+            let estimatedAdultWeightKg_Base = (currentWeightKg / ageWeeks) * effectiveGrowthWeeks;
+            const avgAdultWeightKg = (gender === 'male') ? breedInfo.maleKg : breedInfo.femaleKg;
+            const nonGenderAvg = (breedInfo.maleKg + breedInfo.femaleKg) / 2;
+            const genderFactor = (nonGenderAvg > 0) ? avgAdultWeightKg / nonGenderAvg : 1;
+            let estimatedAdultWeightKg = estimatedAdultWeightKg_Base * genderFactor;
+
+            // --- Sanity Checks ---
+            // (Sanity checks remain the same)
+             const maturityThreshold = 0.85;
+             if (ageWeeks >= weeksToAdult * maturityThreshold && estimatedAdultWeightKg < currentWeightKg) {
+                estimatedAdultWeightKg = currentWeightKg * 1.02;
+            }
+             const maxAvgBreedWeight = Math.max(breedInfo.maleKg, breedInfo.femaleKg);
+              const youngAgeThreshold = 10;
+             if (ageWeeks < youngAgeThreshold && estimatedAdultWeightKg > maxAvgBreedWeight * 1.7) {
+                 estimatedAdultWeightKg = maxAvgBreedWeight * 1.7;
+             }
+             const minAvgBreedWeight = Math.min(breedInfo.maleKg, breedInfo.femaleKg);
+             if (estimatedAdultWeightKg < minAvgBreedWeight * 0.5) {
+                 estimatedAdultWeightKg = minAvgBreedWeight * 0.5;
+             }
+
+             // Ensure estimated adult weight is at least current weight
+             estimatedAdultWeightKg = Math.max(estimatedAdultWeightKg, currentWeightKg);
+
+
+            // --- Display Results ---
+            const estimatedAdultWeightLb = estimatedAdultWeightKg * KG_TO_LB;
+            // Calculate bounds based on the *final* estimated adult weight
+            const lowerBoundKg_Final = estimatedAdultWeightKg * (1 - CHART_RANGE_FACTOR);
+            const upperBoundKg_Final = estimatedAdultWeightKg * (1 + CHART_RANGE_FACTOR);
+            const lowerBoundLb_Final = lowerBoundKg_Final * KG_TO_LB;
+            const upperBoundLb_Final = upperBoundKg_Final * KG_TO_LB;
+
+
+            resultTextDiv.innerHTML = `Estimated Adult Weight Range for a ${gender} ${breedInfo.name}:<br>
+                <strong>${lowerBoundKg_Final.toFixed(1)} - ${upperBoundKg_Final.toFixed(1)} kg</strong>
+                (${lowerBoundLb_Final.toFixed(1)} - ${upperBoundLb_Final.toFixed(1)} lb)`;
+
+
+            // --- Prepare Chart Data ---
+            const labels = [];
+            const estimatedData = [];
+            const lowerBandData = [];
+            const upperBandData = [];
+
+            const startWeekForChart = ageWeeks;
+            const endWeek = Math.max(weeksToAdult + 4, ageWeeks + 4);
+            const step = Math.ceil((endWeek - startWeekForChart) / 25) || 1;
+
+            // --- SMOOTHING CHANGE START ---
+            // Calculate proportion of growth already achieved according to the curve SHAPE
+            const proportionAtStart = getChartProportion(startWeekForChart, weeksToAdult);
+            // Total weight gain remaining from current point to estimated adult weight
+            const totalWeightGainRemaining = estimatedAdultWeightKg - currentWeightKg;
+            // Total proportion remaining in the curve shape (from current age to adult age)
+            // Avoid division by zero if already adult (proportion = 1)
+            const totalProportionRemaining = Math.max(1.0 - proportionAtStart, 0.0001);
+             // --- SMOOTHING CHANGE END ---
+
+
+            // Add the very first point: Current Age & Current Weight
+            labels.push(`Wk ${startWeekForChart} (Current)`);
+            estimatedData.push(currentWeightKg.toFixed(2));
+            // Start the band at the current weight +/- range factor applied to *current* weight (can adjust this)
+            lowerBandData.push((currentWeightKg * (1 - CHART_RANGE_FACTOR / 2)).toFixed(2)); // Maybe narrower band initially
+            upperBandData.push((currentWeightKg * (1 + CHART_RANGE_FACTOR / 2)).toFixed(2));
+
+
+            // Loop for future points
+            for (let week = startWeekForChart + step; week <= endWeek; week += step ) {
+                 labels.push(`Wk ${week}`);
+
+                // --- SMOOTHING CHANGE START ---
+                // Calculate the proportion for the current week in the loop
+                 const proportionAtCurrentWeek = getChartProportion(week, weeksToAdult);
+
+                 // Calculate how far along the *remaining* proportion curve we are
+                 const fractionOfRemainingGrowth = (proportionAtCurrentWeek - proportionAtStart) / totalProportionRemaining;
+
+                 // Calculate the plotted weight: Start weight + (fraction of remaining growth * total remaining weight gain)
+                 // Ensure plotWeight doesn't exceed the final estimate or go below current weight
+                 let plotWeightKg = currentWeightKg + (totalWeightGainRemaining * fractionOfRemainingGrowth);
+                 plotWeightKg = Math.max(currentWeightKg, Math.min(plotWeightKg, estimatedAdultWeightKg)); // Clamp between current and estimated adult
+                 // --- SMOOTHING CHANGE END ---
+
+
+                estimatedData.push(plotWeightKg.toFixed(2));
+                // Calculate band based on the *plotted* weight for that week
+                // The band width will naturally expand as plotWeightKg increases
+                lowerBandData.push((plotWeightKg * (1 - CHART_RANGE_FACTOR)).toFixed(2));
+                upperBandData.push((plotWeightKg * (1 + CHART_RANGE_FACTOR)).toFixed(2));
+
+                // Loop finishing logic (remains the same)
+                 if (week < endWeek && (week + step > endWeek) && week < weeksToAdult) {
+                     if (weeksToAdult > week) week = weeksToAdult - step;
+                }
+                 else if (week < endWeek && (week + step > endWeek) && week >= weeksToAdult) {
+                     week = endWeek - step;
+                 }
+            }
+
+            // Ensure the very last point reflects the final estimated adult range at weeksToAdult
+            const finalWeekLabel = `Wk ${weeksToAdult} (Avg. Adult)`;
+            if (labels[labels.length - 1] !== finalWeekLabel) {
+                 if (parseInt(labels[labels.length-1].match(/\d+/)[0]) < weeksToAdult) {
+                     labels.push(finalWeekLabel);
+                     estimatedData.push(estimatedAdultWeightKg.toFixed(2));
+                     lowerBandData.push(lowerBoundKg_Final.toFixed(2)); // Use final bounds here
+                     upperBandData.push(upperBoundKg_Final.toFixed(2)); // Use final bounds here
+                 } else {
+                    labels[labels.length - 1] = finalWeekLabel;
+                    estimatedData[estimatedData.length - 1] = estimatedAdultWeightKg.toFixed(2);
+                    lowerBandData[lowerBandData.length - 1] = lowerBoundKg_Final.toFixed(2); // Use final bounds here
+                    upperBandData[upperBandData.length - 1] = upperBoundKg_Final.toFixed(2); // Use final bounds here
+                 }
+            } else { // If the loop landed on the final week, still ensure bounds are the final ones
+                 estimatedData[estimatedData.length - 1] = estimatedAdultWeightKg.toFixed(2);
+                 lowerBandData[lowerBandData.length - 1] = lowerBoundKg_Final.toFixed(2);
+                 upperBandData[upperBandData.length - 1] = upperBoundKg_Final.toFixed(2);
+            }
+
+
+            // --- Create/Update Chart ---
+            chartContainer.style.display = 'block';
+            updateChart(labels, lowerBandData, estimatedData, upperBandData, weightUnit);
+        }
+
+        // updateChart function remains the same as before - Omitted for brevity
+        function updateChart(labels, lowerData, estimatedData, upperData, displayUnit) {
+            const ctx = canvas.getContext('2d');
+
+            const displayMultiplier = (displayUnit === 'lb') ? KG_TO_LB : 1;
+            const unitLabel = displayUnit;
+
+            // Convert data for display
+            const displayLower = lowerData.map(w => (w * displayMultiplier).toFixed(1));
+            const displayEstimated = estimatedData.map(w => (w * displayMultiplier).toFixed(1));
+            const displayUpper = upperData.map(w => (w * displayMultiplier).toFixed(1));
+
+
+            if (growthChart) {
+                growthChart.destroy(); // Destroy previous chart instance
+            }
+
+            growthChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                         {
+                            label: `Lower Range (${unitLabel})`,
+                            data: displayLower,
+                            borderColor: 'rgba(110, 43, 33, 0.5)',
+                            backgroundColor: 'rgba(110, 43, 33, 0.1)',
+                            pointRadius: 0, // No points on bands
+                            borderWidth: 1,
+                            fill: '+1', // Fill to next dataset (estimated)
+                            order: 3
+                        },
+                        {
+                            label: `Estimated Growth (${unitLabel})`,
+                            data: displayEstimated,
+                            borderColor: 'rgb(0, 123, 255)',
+                            backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                            tension: 0.1, // Slight curve
+                            pointRadius: 2,
+                            pointHoverRadius: 5,
+                            borderWidth: 2,
+                            fill: false,
+                             order: 2
+                        },
+
+                        {
+                            label: `Upper Range (${unitLabel})`,
+                            data: displayUpper,
+                             borderColor: 'rgba(0, 123, 255, 0.5)',
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)', // Same as lower band fill
+                            pointRadius: 0,
+                            borderWidth: 1,
+                            fill: '-1', // No fill itself, covered by lower band fill
+                             order: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Adjust as needed
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Estimated Growth Curve'
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                // Custom tooltip to show range better
+                                label: function(context) {
+                                    let label = '';
+                                    const estDatasetIndex = 1; // Index of the 'Estimated Growth' dataset
+                                    const lowerDatasetIndex = 0;
+                                    const upperDatasetIndex = 2;
+
+                                    // Find the estimated value at this point
+                                    const estValue = parseFloat(context.chart.data.datasets[estDatasetIndex].data[context.dataIndex]);
+
+                                     // Find the corresponding range values
+                                    const lowerVal = parseFloat(context.chart.data.datasets[lowerDatasetIndex].data[context.dataIndex]);
+                                    const upperVal = parseFloat(context.chart.data.datasets[upperDatasetIndex].data[context.dataIndex]);
+
+
+                                     label = `Est: ${estValue.toFixed(1)} ${unitLabel} (Range: ${lowerVal.toFixed(1)} - ${upperVal.toFixed(1)} ${unitLabel})`;
+
+                                    return label;
+                                }
+                            }
+                        },
+                         filler: {
+                            propagate: true // Allow fill to work correctly between bands
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Age (Weeks)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: `Weight (${unitLabel})`
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+
+        // --- Initial Setup ---
+        populateBreeds();
+        calculateBtn.addEventListener('click', calculateAndPlot);
+
+    </script>
+            </div>
+
+
+
+        </div> <!-- / #content -->
+
+        <!-- Right Ad Slot -->
+        <div id="ad-right1" class="box">
+            <a href="https://hop.clickbank.net/?affiliate=rclewis67g&vendor=waterfs&cbpage=auto&tid=001" rel="sponsored">
+                <img src="img/water-from-air.png" alt="Advertisement" style="max-width: 100%; height: auto;">
+            </a>
+        </div>
+
+    </div><!-- / .container -->
+    
+     <!-- Bottom Ad Slot (initially hidden, shown on smaller screens or via JS) -->
+    <div id="ad-bottom1">  
+        <a href="https://hop.clickbank.net/?vendor=javaburn&affiliate=rclewis67g&lid=1&tid=001" rel="sponsored">
+            <img src="img/ad1.jpg" alt="Advertisement" style="max-width: 100%; height: auto;">
+        </a>
+    </div>
+
+    
+</body>
+</html>

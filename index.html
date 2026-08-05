@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-84RK4S7EN4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-84RK4S7EN4');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Stuff</title>
+    <style>
+        /* Basic Reset & Dark Theme */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: #0a0a2a; /* Dark blue/purple */
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        #explanation {
+            width: 500px;
+            max-width: 80%;
+            font-size:12pt;
+            color: #aaaaff;
+        }
+        
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px; /* Max width for desktop */
+            position: relative; /* Needed for absolute positioning of ads */
+            padding-top: 40px;
+        }
+
+        /* Ad Slot Styling */
+        .box {
+            /*background-color: #2a2a4a;*/ /* Slightly lighter dark */
+            /* border: 1px dashed #5a5a7a; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        #ad-left1, #ad-right1 {
+            width: 300px; /* Standard ad width */
+            height: 600px; /* Standard ad height */
+            position: sticky; /* Stick to viewport within container */
+            top: 20px;
+        }
+        #ad-left1 { order: 1; } /* Left column */
+        #ad-right1 { order: 3; } /* Right column */
+
+        #ad-bottom1 {
+            width: 400px; /* Standard is 728 */
+            max-width: fit-content;
+            margin: 30px auto 0; /* Centered below content */
+            clear: both; /* Ensure it's below floated/flexed items if needed */
+            display: block; /* ADD THIS: Hide by default on wider screens */
+
+        }
+
+        /* Content Area */
+        #content {
+            flex-grow: 1; /* Takes remaining space */
+            padding: 20px;
+            text-align: center;
+            max-width: 600px; /* Limit content width */
+            margin: 0 auto; /* Center content between side ads */
+            order: 2; /* Middle column */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #terms {
+            padding: 20px;
+            text-align: center;
+            max-width: 600px; /* Limit content width */
+            display: block;
+            align-items: center;
+            color:#5a5a7a
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* Basic Moon/Stars - replace with better graphics/SVG if desired */
+        .moon-icon {
+            font-size: 1.5em; /* Adjust size */
+            transform: rotate(-10deg);
+        }
+        .stars {
+            font-size: 1em;
+            margin-left: 5px;
+        }
+        a:-webkit-any-link {
+            color: rgb(89, 238, 139);
+            cursor: pointer;
+            text-decoration:underline;
+        }
+        #input-view {
+            color:#aaaaff;
+        }
+        /* Input View */
+        #input-view h2 {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+        }
+        #input-view
+        .time-selector-container {
+            background-color: #1a1a3a;
+            border: 1px solid #3a3a5a;
+            border-radius: 8px;
+            padding: 20px;
+            display: inline-flex; /* Use inline-flex for horizontal alignment */
+            align-items: center; /* Vertically align items */
+            gap: 10px; /* Space between selects */
+            margin-bottom: 30px;
+        }
+
+        .time-selector-container select {
+            background-color: #2a2a4a;
+            color: #f0f0f0;
+            border: 1px solid #4a4a6a;
+            padding: 10px 22px;
+            font-size: 1.5em; /* Larger font size */
+            border-radius: 5px;
+            appearance: none; /* Remove default arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        /* Optional: Add custom dropdown arrow */
+        .select-wrapper {
+            position: relative;
+        }
+         .select-wrapper::after {
+            content: '▼';
+            font-size: 0.6em;
+            color: #aaaaff;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none; /* Allow clicking the select */
+        }
+
+
+        button {
+            background-color: #f0e68c; /* Khaki / Light Yellow */
+            color: #333;
+            border: none;
+            margin-left: 6px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background-color: #e6d971;
+        }
+
+        #input-view p {
+            margin-top: 30px;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        /* Results View */
+        #bedtime-results-view, #wakeup-results-view {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+
+        #bedtime-results-view h2, #wakeup-results-view h2 {
+            font-size: 1.5em;
+            color: #f0e68c; /* Match button color */
+            margin-bottom: 15px;
+        }
+
+        #bedtime-results-view p, #wakeup-results-view p {
+            margin-bottom: 20px;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .suggested-times {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .time-option {
+            background-color: #2a2a4a;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #4a4a6a;
+            display: flex;
+            flex-direction: column; /* Stack time and button */
+            align-items: center;
+            gap: 10px;
+            min-width: 120px; /* Ensure some width */
+        }
+
+        .time-option span {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .time-option .suggestion-label {
+            font-size: 0.7em;
+            color: #aaaaff;
+            text-transform: uppercase;
+            margin-top: -8px; /* Pull closer to time */
+        }
+
+        .time-option button.set-alarm-btn {
+            background-color: #5a5a7a;
+            color: #f0f0f0;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            width: 100%; /* Make button fill container */
+        }
+         .time-option button.set-alarm-btn:hover {
+             background-color: #7a7a9a;
+         }
+
+
+        /* Alarm Popup */
+        #alarm-popup {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #1a1a3a;
+            border: 1px solid #aaaaff;
+            padding: 30px;
+            border-radius: 10px;
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            min-width: 300px;
+        }
+
+        #alarm-popup p {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        #countdown-timer {
+            font-size: 2em;
+            font-weight: bold;
+            color: #f0e68c;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        #alarm-cancel-btn {
+             background-color: #d9534f; /* Red */
+             color: white;
+        }
+         #alarm-cancel-btn:hover {
+             background-color: #c9302c;
+         }
+
+
+        /* Responsiveness */
+        @media (max-width: 900px) {
+             #ad-left1, #ad-right1 {
+                 display: none; /* Hide side ads on smaller screens */
+             }
+             #content {
+                 margin: 0 10px; /* Add some horizontal margin */
+                 max-width: 100%;
+             }
+             #ad-bottom {
+                 display: block; /* Show bottom ad */
+                 width: 90%; /* Adjust width */
+                 max-width: 728px;
+                 height: auto; /* Adjust height if needed */
+                 min-height: 50px;
+             }
+             .container {
+                 flex-direction: column; /* Stack content and bottom ad */
+             }
+             #content { order: 1; } /* Content first */
+        }
+
+         @media (max-width: 480px) {
+             header h1 {
+                 font-size: 2em;
+             }
+             .time-selector-container select {
+                 font-size: 1.2em;
+                 padding: 8px 23px;
+             }
+             .suggested-times {
+                 gap: 10px;
+             }
+             .time-option {
+                 padding: 10px 15px;
+                 min-width: 100px;
+             }
+             .time-option span {
+                 font-size: 1.1em;
+             }
+             #alarm-popup {
+                 width: 90%;
+                 padding: 20px;
+             }
+             #countdown-timer {
+                 font-size: 1.5em;
+             }
+         }
+
+        /* Utility Class */
+        .hidden {
+            display: none !important; /* Use !important to override other display rules */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Ad Slot -->
+        <div id="ad-left1" class="box">
+            <a href="https://cc17cgsfsklod0kovd6n1z9v7t.hop.clickbank.net/?&traffic_source=001" rel="sponsored">
+                <img src="img/snoring2.jpg" alt="Advertisement" style="max-width: 100%; height: auto;">
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <div id="content">
+            <header>
+                <h1>
+                    Random Stuff
+                </h1>
+            </header>
+
+            <!-- Input View -->
+            <div id="input-view">
+                <h2>Here, you can find multiple tools such as calculators and how-to guides.
+                </h2>
+                <p>
+                    ________________________
+                </p>
+                <br>
+                <ul>
+                    <a href="sleep-calculator.html">Sleep Calculator</a> - Calculate sleep and REM cycles for optimum rest.</li>
+                </ul>
+                <ul>
+                    <a href="puppy-adult-weight-estimator.html">Puppy Weight Estimator</a> - Calculate your puppy's adult weight.</li>
+                </ul>
+                <ul>
+                    <a href="bmi-calculator.html">BMI Index Calculator</a> - Advanced Body Mass Index Calculator.</li>
+                </ul>
+                <ul>
+                    <a href="mortgage-estimator.html">Mortgage Estimator</a> - Mortgage estimator for Canada and USA.</li>
+                </ul>
+                <ul>
+                    <a href="compute-compound-interest.html">Compute Compound Interest</a> - Estimate the future growth of your saving.</li>
+                </ul>
+                <ul>
+                    <a href="simple-paint.html">Simple Paint App</a> - Simple paint app with upload and save.</li>
+                </ul>
+            </div>
+
+
+
+        </div> <!-- / #content -->
+
+        <!-- Right Ad Slot -->
+        <div id="ad-right1" class="box">
+            <a href="https://9341bkpktujobuilxrq84m6ydu.hop.clickbank.net/?&traffic_source=001" rel="sponsored">
+                <img src="img/mitolyn.png" alt="Advertisement" style="max-width: 100%; height: auto;">
+            </a>
+        </div>
+
+    </div><!-- / .container -->
+    <div id="explanation">
+        <br>
+        <p>
+           
+        </p>
+    </div>
+    <div id="ad-bottom1">  
+        <a href="https://hop.clickbank.net/?vendor=javaburn&affiliate=rclewis67g&lid=1&tid=001" rel="sponsored">
+            <img src="img/ad1.jpg" alt="Advertisement" style="max-width: 100%; height: auto;">
+        </a>
+    </div>
+
+    <div id="terms">
+       <br><br><br><br><br>
+        <h2>Terms and Privacy Policy</h2>
+<p>This agreement describes the conditions and rules under which Random-stuff.ca ("our company", "we") offer you its services at Random-stuff.ca.
+
+This agreement will be governed by the laws of Canada, without reference to conflict of laws principles. You agree that any litigation relating to this agreement may only be brought in, and shall be subject to the jurisdiction of, any Court of Canada.
+</p>
+<br>
+<h3>Terms</h3>
+By using the services of Random-stuff.ca, you agree to observe all of the following conditions and rules:
+<li>Use of the Random-stuff.ca services is at your own risk.</li>
+<li>You bear full responsibility for any data transmitted to Random-stuff.ca servers.</li>
+<li>You agree not to use Random-stuff.ca to upload any illegal materials.</li>
+<li>You agree not to integrate any Random-stuff.ca service into your own or 3rd party applications.</li>
+<li>We reserves the right to change or cease any of services at Random-stuff.ca, at any time.</li>
+<li>We reserves the right to change the terms of this agreement without notice.</li>
+<br>
+<h3>Privacy</h3>
+<li>In order to improve the quality of our services, we may save and analyze the metadata of your requests.</li>
+<li>Google collects data and uses cookies for ad personalization and measurement for this site. Learn how Google collects and uses data. You can turn off ad personalization at any time in your Google account settings. Also, we use cookies for statistical purposes. By using this site, you consent to our use of cookies.</li>
+</div>
+</body>
+</html>

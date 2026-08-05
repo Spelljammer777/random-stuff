@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-84RK4S7EN4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-84RK4S7EN4');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Estimator</title>
+    <meta name="description" content="Mortgage Estimator: Use our free Mortgage Estimator to easily calculate potential mortgage payments.">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Ad Slot -->
+        <div id="ad-left1" class="box">
+            <a href="https://28177pl7kvxklyp649rhz10c6a.hop.clickbank.net/?&traffic_source=001"><img decoding="async" src="img/genius-300x600-a.gif" alt="Genius Dog 300 x 600 - Animated" /></a>
+        </div>
+
+        <!-- Main Content -->
+        <div id="content">
+            <header>
+                <h1>
+                    Mortgage Estimator
+                </h1>
+                <img src="img/mortgage estimator.svg" alt="Mortgage Estimator" style="max-width: 100%; height: auto;">
+                <div id="intro">
+                <p>Use our free Mortgage Estimator to easily calculate potential mortgage payments. Enter your desired loan amount, interest rate, and amortization period to get started. This versatile mortgage estimator supports settings for both Canada and the USA, including specific term options for Canadian users. Quickly estimate your home loan affordability and plan your budget with our user-friendly mortgage estimator tool. Get your personalized payment estimate today!</p>
+                </div>
+            </header>
+
+            <!-- **** START: Mortgage Estimator HTML **** -->
+            <form id="mortgage-form">
+
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" name="country">
+                        <option value="Canada" selected>Canada</option>
+                        <option value="USA">USA</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mortgageAmount">Mortgage Amount ($)</label>
+                    <input type="number" id="mortgageAmount" name="mortgageAmount" placeholder="e.g., 300000" required min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="interestRate">Interest Rate (%)</label>
+                     <div class="input-group">
+                        <input type="number" id="interestRate" name="interestRate" placeholder="e.g., 5.25" required step="0.01" min="0">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="amortizationPeriod">Amortization Period (Years)</label>
+                    <select id="amortizationPeriod" name="amortizationPeriod" required>
+                        <option value="5">5 Years</option>
+                        <option value="10">10 Years</option>
+                        <option value="15">15 Years</option>
+                        <option value="20">20 Years</option>
+                        <option value="25" selected>25 Years</option>
+                        <option value="30">30 Years</option>
+                    </select>
+                </div>
+
+                <!-- Term is typically more distinct in Canada -->
+                <div class="form-group" id="term-group">
+                    <label for="termYears">Term (Years - Canada)</label>
+                     <select id="termYears" name="termYears">
+                         <option value="1">1 Year</option>
+                        <option value="2">2 Years</option>
+                        <option value="3">3 Years</option>
+                        <option value="4">4 Years</option>
+                        <option value="5" selected>5 Years</option>
+                        <option value="7">7 Years</option>
+                        <option value="10">10 Years</option>
+                    </select>
+                     <small style="display: block; margin-top: 5px; color: #6c757d;">The period your contract details (like interest rate) are fixed. Often shorter than amortization in Canada.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentFrequency">Payment Frequency (monthly is typical)</label>
+                    <select id="paymentFrequency" name="paymentFrequency" required>
+                        <option value="monthly" selected>Monthly (12/year)</option>
+                        <option value="bi-weekly">Bi-Weekly (26/year)</option>
+                        <option value="weekly">Weekly (52/year)</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="calculateBtn">Calculate Payment</button>
+
+            </form>
+
+            <div id="results">
+                <!-- Calculation result will be displayed here -->
+            </div>
+            <!-- **** END: Mortgage Estimator HTML **** -->
+
+        </div> <!-- / #content -->
+
+        <!-- Right Ad Slot -->
+        <div id="ad-right1" class="box">
+            <a href="https://hop.clickbank.net/?affiliate=rclewis67g&vendor=waterfs&cbpage=auto&tid=001" rel="sponsored">
+                <img src="img/water-from-air.png" alt="Advertisement" style="max-width: 100%; height: auto;">
+            </a>
+        </div>
+
+    </div><!-- / .container -->
+
+     <!-- Bottom Ad Slot -->
+    <div id="ad-bottom1">
+        <a href="https://hop.clickbank.net/?vendor=javaburn&affiliate=rclewis67g&lid=1&tid=001" rel="sponsored">
+            <img src="img/ad1.jpg" alt="Advertisement" style="max-width: 80%; height: auto;">
+        </a>
+    </div>
+
+    <style>
+        /* Basic Reset & Dark Theme (Keep Base Styles) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            padding: 20px; /* Adjusted padding */
+            max-width: 100%; /* Allow full width */
+            display: flex;
+            flex-direction: column; /* Stack main container and terms */
+            align-items: center;
+            margin: 0 auto; /* Center body content */
+            /* background-color: #1a1a2e; /* Dark blue background */
+             background-color: #f9f9f9; /* light gray */
+            color: #e0e0e0; /* Light text color for dark background */
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px; /* Max width for desktop */
+            position: relative; /* Needed for absolute positioning of ads */
+            padding-top: 15px;
+            margin: 0 auto; /* Center container */
+        }
+
+        img {
+            border: #3c8532;
+            border-style: solid;
+        }
+
+        /* Ad Slot Styling (Keep) */
+        .box {
+            /*background-color: #2a2a4a;*/ /* Slightly lighter dark */
+            /* border: 1px dashed #5a5a7a; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /*color: #fdfbfb;*/
+            /*background-color: #f9f9f9;*/
+            font-size: 0.9em;
+            text-align: center;
+        }
+        #intro {
+            max-width: 450px;
+            display: inline-grid;
+            justify-content: center;
+        }
+        #ad-left1, #ad-right1 {
+            width: 300px; /* Standard ad width */
+            height: 606px; /* Standard ad height */
+            position: sticky; /* Stick to viewport within container */
+            top: 20px;
+        }
+        #ad-left1 { order: 1; } /* Left column */
+        #ad-right1 { order: 3; } /* Right column */
+
+        #ad-bottom1 {
+            width: 600px; /* Standard is 728 */
+            max-width: fit-content;
+            margin: 30px auto 0; /* Centered below content */
+            clear: both; /* Ensure it's below floated/flexed items if needed */
+            display: block;
+            order: 3; /* Ensure it comes after content */
+            padding-left: 7%;
+        }
+
+        /* Content Area (Keep) */
+        #content {
+            flex-grow: 1; /* Takes remaining space */
+            padding: 20px;
+            text-align: center;
+            max-width: 600px; /* Limit content width */
+            margin: 0 19px; /* Center content between side ads */
+            order: 2; /* Middle column */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0;
+            /* Add background for content area if needed */
+            background-color: #fff; /* White background for the form area */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #ddd; /* Subtle border */
+            color: #333; /* Dark text for content area */
+        }
+
+
+        /* Header (Keep general structure, content updated below) */
+        header {
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 2.2em; /* Adjusted size */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            color: #0056b3; /* Match primary color */
+            margin-top: 20px; /* Add some space */
+        }
+
+        a:-webkit-any-link {
+            color: rgb(89, 238, 139); /* Link color from original */
+            cursor: pointer;
+            text-decoration: underline;
+        }
+         a:-webkit-any-link:hover {
+            color: rgb(120, 255, 170); /* Lighter green on hover */
+        }
+
+        /* --- START: Mortgage Estimator Specific Styles (Adapted for Theme) --- */
+
+        #mortgage-form {
+            width: 100%; /* Form takes full width of content area */
+            max-width: 500px; /* Limit form width */
+            margin: 0 auto; /* Center form within #content */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left; /* Align labels left */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555; /* Darker gray for labels */
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ced4da; /* Standard border */
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: #fff; /* White background for inputs */
+            color: #333; /* Dark text for inputs */
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+             -webkit-appearance: none; /* Fix for iOS number input issues */
+             -moz-appearance: textfield;
+             appearance: textfield;
+             margin: 0;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            border-color: #80bdff; /* Blue focus border */
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Blue focus shadow */
+        }
+
+        /* Input group for Interest Rate (%) */
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group input[type="number"] {
+            padding-right: 45px; /* More space for the % sign */
+        }
+
+        .input-group-text {
+            position: absolute;
+            right: 1px; /* Position inside */
+            top: 1px;
+            bottom: 1px;
+            padding: 0 12px;
+            background-color: #e9ecef; /* Light gray background for % */
+            border-left: 1px solid #ced4da; /* Match input border */
+            border-radius: 0 4px 4px 0;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            color: #495057; /* Standard text color */
+        }
+
+        /* Button Styling */
+        button#calculateBtn { /* Specificity added */
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            background-color: #007bff; /* Bootstrap primary blue */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            margin-top: 25px; /* Space above button */
+            /* Remove previous button styles if conflicting */
+            margin-left: 0;
+            gap: 0;
+            display: block; /* Ensure it takes full width */
+        }
+
+        button#calculateBtn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        /* Results Area Styling */
+        #results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e2f0ff; /* Light blue background */
+            border: 1px solid #b8d6f1; /* Slightly darker blue border */
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #004085; /* Dark blue text */
+            display: none; /* Hidden initially */
+            width: 100%; /* Take full width of content area */
+            max-width: 500px; /* Match form width */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+         #results.error {
+            background-color: #f8d7da; /* Light red for errors */
+            border-color: #f5c6cb;
+            color: #721c24; /* Dark red text for errors */
+         }
+
+        /* --- END: Mortgage Estimator Specific Styles --- */
+
+
+        /* Terms Section Styling (Keep) */
+        #terms {
+            padding: 20px; /* Add padding */
+            text-align: center;
+            max-width: 800px; /* Wider for terms */
+            margin: 30px auto 20px; /* Space above and below */
+            color: #6c757d; /* Lighter text for terms */
+            font-size: 0.85em;
+            width: 90%; /* Take most of the width */
+            order: 4; /* Ensure it's last */
+        }
+        #terms h2 {
+            color: #64b3af; /* Original color */
+            margin-bottom: 15px;
+        }
+        #terms p, #terms li {
+             padding: 3px 0; /* Adjust padding */
+            text-align: center; /* Center text */
+            color: #6c757d; /* Ensure consistent color */
+            font-size: 1em; /* Adjust size relative to parent */
+             max-width: 100%; /* Allow text to wrap */
+             list-style-position: inside; /* Keep bullets aligned */
+        }
+
+
+        /* Utility Class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsiveness (Keep and Adjust) */
+        @media (max-width: 1220px) {
+             #ad-left1, #ad-right1 {
+                 display: none; /* Hide side ads */
+             }
+             #content {
+                 margin: 0 10px; /* Add some horizontal margin */
+                 max-width: calc(100% - 20px); /* Adjust max-width */
+             }
+             #ad-bottom1 {
+                 display: block; /* Show bottom ad */
+                 width: 90%;
+                 max-width: 728px;
+                 height: auto;
+                 min-height: 50px;
+                 margin-top: 20px; /* Adjust spacing */
+                 padding-left: 15%;
+             }
+             .container {
+                 flex-direction: column;
+                 align-items: center; /* Center items vertically */
+                 padding-top: 0; /* Remove top padding */
+             }
+             #content { order: 1; } /* Content first */
+             #ad-bottom1 { order: 2; } /* Ad below content */
+             #terms { order: 3; } /* Terms last */
+        }
+
+         @media (max-width: 640px) { /* Adjusted breakpoint */
+             body { padding: 10px; }
+             header h1 {
+                 font-size: 1.8em; /* Smaller header */
+             }
+             #content {
+                 padding: 15px;
+             }
+              #mortgage-form, #results {
+                 max-width: 100%; /* Allow form/results full width */
+             }
+             label { font-size: 0.95rem; }
+             input[type="number"], select, button#calculateBtn {
+                 padding: 10px 12px;
+                 font-size: 0.95rem;
+             }
+             .input-group input[type="number"] { padding-right: 40px; } /* Adjust padding */
+             .input-group-text { padding: 0 10px; }
+         }
+
+    </style>
+
+    <!-- **** START: Mortgage Estimator JAVASCRIPT **** -->
+    <script>
+        // --- DOM Elements ---
+        const mortgageForm = document.getElementById('mortgage-form');
+        const countrySelect = document.getElementById('country');
+        const termGroup = document.getElementById('term-group'); // Div containing term select
+        const mortgageAmountInput = document.getElementById('mortgageAmount');
+        const interestRateInput = document.getElementById('interestRate');
+        const amortizationPeriodSelect = document.getElementById('amortizationPeriod');
+        const paymentFrequencySelect = document.getElementById('paymentFrequency');
+        const resultsDiv = document.getElementById('results');
+        const calculateBtn = document.getElementById('calculateBtn'); // Ensure ID matches button
+
+        // --- Functions ---
+
+        // Function to show/hide Term field based on country
+        function toggleTermField() {
+            if (countrySelect.value === 'Canada') {
+                termGroup.classList.remove('hidden');
+            } else {
+                termGroup.classList.add('hidden');
+            }
+        }
+
+        // Function to calculate mortgage payment
+        function calculateMortgagePayment(principal, annualInterestRate, amortizationYears, frequency) {
+            if (principal <= 0 || annualInterestRate < 0 || amortizationYears <= 0) {
+                 displayError("Please enter valid positive numbers for amount, rate, and amortization period.");
+                return null;
+            }
+
+            let paymentsPerYear;
+            switch (frequency) {
+                case 'bi-weekly':
+                    paymentsPerYear = 26;
+                    break;
+                case 'weekly':
+                    paymentsPerYear = 52;
+                    break;
+                case 'monthly':
+                default:
+                    paymentsPerYear = 12;
+                    break;
+            }
+
+            const totalPayments = amortizationYears * paymentsPerYear;
+            let periodicInterestRate;
+            let payment;
+
+            // Handle zero interest rate separately
+            if (annualInterestRate === 0) {
+                 payment = principal / totalPayments;
+            } else {
+                // Note: Canadian mortgages often compound semi-annually, but payment frequency differs.
+                // This formula uses the *payment frequency* for the periodic rate, which is common for simple estimators.
+                // For extreme accuracy matching Canadian lenders, a more complex calculation involving semi-annual compounding is needed.
+                periodicInterestRate = (annualInterestRate / 100) / paymentsPerYear;
+                 // M = P [ i(1 + i)^n ] / [ (1 + i)^n – 1]
+                const rateFactor = Math.pow(1 + periodicInterestRate, totalPayments);
+                payment = principal * (periodicInterestRate * rateFactor) / (rateFactor - 1);
+            }
+
+
+            if (!isFinite(payment)) {
+                 displayError("Could not calculate payment. Please check your inputs.");
+                 return null;
+            }
+
+            return payment;
+        }
+
+        // Function to display results
+        function displayResult(payment, frequency) {
+            resultsDiv.innerHTML = `Estimated ${frequency.charAt(0).toUpperCase() + frequency.slice(1)} Payment: <strong>$${payment.toFixed(2)}</strong>`;
+            resultsDiv.classList.remove('error', 'hidden'); // Ensure it's not styled as error and is visible
+            resultsDiv.style.display = 'block'; // Make sure it's visible
+        }
+
+         // Function to display errors
+        function displayError(message) {
+            resultsDiv.innerHTML = `Error: ${message}`;
+            resultsDiv.classList.add('error');
+            resultsDiv.classList.remove('hidden');
+            resultsDiv.style.display = 'block'; // Make sure it's visible
+        }
+
+
+        // --- Event Listeners ---
+
+        // Listen for country changes to toggle Term field
+        countrySelect.addEventListener('change', toggleTermField);
+
+        // Listen for form submission
+        mortgageForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent actual form submission
+
+            // Get values from inputs
+            const principal = parseFloat(mortgageAmountInput.value);
+            const annualInterestRate = parseFloat(interestRateInput.value);
+            const amortizationYears = parseInt(amortizationPeriodSelect.value, 10);
+            const frequency = paymentFrequencySelect.value;
+
+             // Basic validation check before calculation
+            if (isNaN(principal) || isNaN(annualInterestRate) || isNaN(amortizationYears)) {
+                displayError("Please ensure all fields are filled with valid numbers.");
+                return;
+            }
+
+            // Calculate
+            const payment = calculateMortgagePayment(principal, annualInterestRate, amortizationYears, frequency);
+
+            // Display result or handle error (handled within calculate function)
+            if (payment !== null) {
+                displayResult(payment, frequency);
+            }
+        });
+
+
+        // --- Initial Setup ---
+        toggleTermField(); // Set initial visibility of Term field based on default country
+        resultsDiv.style.display = 'none'; // Ensure results are hidden initially
+
+    </script>
+    <!-- **** END: Mortgage Estimator JAVASCRIPT **** -->
+
+</body>
+</html>

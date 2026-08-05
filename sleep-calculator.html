@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-84RK4S7EN4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-84RK4S7EN4');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Calculator</title>
+    <meta name="bedtime calculator" content="bedtime calculator to figure out when you should go to sleep and when to wake up">
+    <style>
+        /* Basic Reset & Dark Theme */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: #0a0a2a; /* Dark blue/purple */
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        #explanation {
+            width: 500px;
+            max-width: 80%;
+            font-size:12pt;
+            color: #aaaaff;
+        }
+        
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px; /* Max width for desktop */
+            position: relative; /* Needed for absolute positioning of ads */
+            padding-top: 40px;
+        }
+
+        /* Ad Slot Styling */
+        .box {
+            /*background-color: #2a2a4a;*/ /* Slightly lighter dark */
+            /* border: 1px dashed #5a5a7a; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        #ad-left1, #ad-right1 {
+            width: 300px; /* Standard ad width */
+            height: 600px; /* Standard ad height */
+            position: sticky; /* Stick to viewport within container */
+            top: 20px;
+        }
+        #ad-left1 { order: 1; } /* Left column */
+        #ad-right1 { order: 3; } /* Right column */
+
+        #ad-bottom1 {
+            width: 400px; /* Standard is 728 */
+            max-width: fit-content;
+            margin: 30px auto 0; /* Centered below content */
+            clear: both; /* Ensure it's below floated/flexed items if needed */
+            display: block; /* ADD THIS: Hide by default on wider screens */
+
+        }
+
+        /* Content Area */
+        #content {
+            flex-grow: 1; /* Takes remaining space */
+            padding: 20px;
+            text-align: center;
+            max-width: 600px; /* Limit content width */
+            margin: 0 auto; /* Center content between side ads */
+            order: 2; /* Middle column */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #terms {
+            padding: 20px;
+            text-align: center;
+            max-width: 600px; /* Limit content width */
+            display: block;
+            align-items: center;
+            color:#5a5a7a
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* Basic Moon/Stars - replace with better graphics/SVG if desired */
+        .moon-icon {
+            font-size: 1.5em; /* Adjust size */
+            transform: rotate(-10deg);
+        }
+        .stars {
+            font-size: 1em;
+            margin-left: 5px;
+        }
+
+
+        /* Input View */
+        #input-view h2 {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: #aaaaff;
+        }
+
+        .time-selector-container {
+            background-color: #1a1a3a;
+            border: 1px solid #3a3a5a;
+            border-radius: 8px;
+            padding: 20px;
+            display: inline-flex; /* Use inline-flex for horizontal alignment */
+            align-items: center; /* Vertically align items */
+            gap: 10px; /* Space between selects */
+            margin-bottom: 30px;
+        }
+
+        .time-selector-container select {
+            background-color: #2a2a4a;
+            color: #f0f0f0;
+            border: 1px solid #4a4a6a;
+            padding: 10px 22px;
+            font-size: 1.5em; /* Larger font size */
+            border-radius: 5px;
+            appearance: none; /* Remove default arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        /* Optional: Add custom dropdown arrow */
+        .select-wrapper {
+            position: relative;
+        }
+         .select-wrapper::after {
+            content: '▼';
+            font-size: 0.6em;
+            color: #aaaaff;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none; /* Allow clicking the select */
+        }
+
+
+        button {
+            background-color: #f0e68c; /* Khaki / Light Yellow */
+            color: #333;
+            border: none;
+            margin-left: 6px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background-color: #e6d971;
+        }
+
+        #input-view p {
+            margin-top: 30px;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        /* Results View */
+        #bedtime-results-view, #wakeup-results-view {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+
+        #bedtime-results-view h2, #wakeup-results-view h2 {
+            font-size: 1.5em;
+            color: #f0e68c; /* Match button color */
+            margin-bottom: 15px;
+        }
+
+        #bedtime-results-view p, #wakeup-results-view p {
+            margin-bottom: 20px;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .suggested-times {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .time-option {
+            background-color: #2a2a4a;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #4a4a6a;
+            display: flex;
+            flex-direction: column; /* Stack time and button */
+            align-items: center;
+            gap: 10px;
+            min-width: 120px; /* Ensure some width */
+        }
+
+        .time-option span {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .time-option .suggestion-label {
+            font-size: 0.7em;
+            color: #aaaaff;
+            text-transform: uppercase;
+            margin-top: -8px; /* Pull closer to time */
+        }
+
+        .time-option button.set-alarm-btn {
+            background-color: #5a5a7a;
+            color: #f0f0f0;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            width: 100%; /* Make button fill container */
+        }
+         .time-option button.set-alarm-btn:hover {
+             background-color: #7a7a9a;
+         }
+
+
+        /* Alarm Popup */
+        #alarm-popup {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #1a1a3a;
+            border: 1px solid #aaaaff;
+            padding: 30px;
+            border-radius: 10px;
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            min-width: 300px;
+        }
+
+        #alarm-popup p {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        #countdown-timer {
+            font-size: 2em;
+            font-weight: bold;
+            color: #f0e68c;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        #alarm-cancel-btn {
+             background-color: #d9534f; /* Red */
+             color: white;
+        }
+         #alarm-cancel-btn:hover {
+             background-color: #c9302c;
+         }
+
+
+        /* Responsiveness */
+        @media (max-width: 900px) {
+             #ad-left1, #ad-right1 {
+                 display: none; /* Hide side ads on smaller screens */
+             }
+             #content {
+                 margin: 0 10px; /* Add some horizontal margin */
+                 max-width: 100%;
+             }
+             #ad-bottom {
+                 display: block; /* Show bottom ad */
+                 width: 90%; /* Adjust width */
+                 max-width: 728px;
+                 height: auto; /* Adjust height if needed */
+                 min-height: 50px;
+             }
+             .container {
+                 flex-direction: column; /* Stack content and bottom ad */
+             }
+             #content { order: 1; } /* Content first */
+        }
+
+         @media (max-width: 480px) {
+             header h1 {
+                 font-size: 2em;
+             }
+             .time-selector-container select {
+                 font-size: 1.2em;
+                 padding: 8px 23px;
+             }
+             .suggested-times {
+                 gap: 10px;
+             }
+             .time-option {
+                 padding: 10px 15px;
+                 min-width: 100px;
+             }
+             .time-option span {
+                 font-size: 1.1em;
+             }
+             #alarm-popup {
+                 width: 90%;
+                 padding: 20px;
+             }
+             #countdown-timer {
+                 font-size: 1.5em;
+             }
+         }
+
+        /* Utility Class */
+        .hidden {
+            display: none !important; /* Use !important to override other display rules */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Ad Slot -->
+        <div id="ad-left1" class="box">
+            <a href="https://cc17cgsfsklod0kovd6n1z9v7t.hop.clickbank.net/?&traffic_source=001" rel="sponsored">
+                <img src="img/snoring2.jpg" alt="Advertisement" style="max-width: 100%; height: auto;">
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <div id="content">
+            <header>
+                <h1>
+                    <span class="moon-icon">🌙</span> Sleep Calculator <span class="stars">✨</span>
+                </h1>
+            </header>
+
+            <!-- Input View -->
+            <div id="input-view">
+                <h2>When should I go to sleep?</h2>
+                <div class="time-selector-container">
+                    <div class="select-wrapper">
+                        <select id="wake-hour">
+                            <!-- Options will be populated by JS -->
+                        </select>
+                    </div>
+                    <span>:</span>
+                     <div class="select-wrapper">
+                        <select id="wake-minute">
+                            <!-- Options will be populated by JS -->
+                        </select>
+                    </div>
+                     <div class="select-wrapper">
+                        <select id="wake-ampm">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="calculate-bedtime-btn">
+                    Calculate bedtime <span class="moon-icon">🛌</span>
+                </button>
+                <br><br>
+                <h2>_______________</h2>
+                <h2>If I go to bed now, when should I wake up? </h2>
+                <button id="calculate-wakeup-btn">
+                    Calculate wake-up time <span class="moon-icon">⏰</span>
+                </button>
+            </div>
+
+            <!-- Bedtime Results View -->
+            <div id="bedtime-results-view" class="hidden">
+                <h2>Bedtime</h2>
+                <p>The average human takes 15 minutes to fall asleep.<br>To wake up refreshed at <strong id="target-wake-time-span"></strong>, you should aim to go to sleep at one of the following times:</p>
+                <div id="suggested-bedtimes" class="suggested-times">
+                    <!-- Bedtimes will be populated by JS -->
+                </div>
+                <p>If you wake up at one of these times, you'll rise in between 90-minute sleep cycles. A good night's sleep consists of 5-6 complete sleep cycles.</p>
+                <button id="bedtime-go-back-btn">
+                    Go back <span style="font-size: 1.2em;">↩</span>
+                </button>
+            </div>
+
+             <!-- Wake-up Results View -->
+            <div id="wakeup-results-view" class="hidden">
+                <h2>Wake-up Time</h2>
+                <p>If you go to bed right now (allowing 15 minutes to fall asleep), you should try to wake up at one of the following times for optimal rest:</p>
+                <div id="suggested-wake-times" class="suggested-times">
+                    <!-- Wake-up times will be populated by JS -->
+                </div>
+                <p>Waking up at these times aligns with the end of a 90-minute sleep cycle, helping you feel more refreshed.</p>
+                <button id="wakeup-go-back-btn">
+                    Go back <span style="font-size: 1.2em;">↩</span>
+                </button>
+            </div>
+
+            <!-- Alarm Popup -->
+            <div id="alarm-popup" class="hidden">
+                 <p>Please keep this tab active while waiting for the alarm.</p>
+                 <div id="countdown-timer">00:00:00</div>
+                 <button id="alarm-cancel-btn">Cancel</button>
+             </div>
+
+        </div> <!-- / #content -->
+
+        <!-- Right Ad Slot -->
+        <div id="ad-right1" class="box">
+            <a href="https://f1ca2hpfoomeh0ulodpn6bwgx7.hop.clickbank.net/?&traffic_source=001" rel="sponsored">
+                <img src="img/sleepreviv.png" alt="Advertisement" style="max-width: 100%; height: auto;">
+            </a>
+        </div>
+
+    </div><!-- / .container -->
+    <div id="explanation">
+        <br>
+        <p>
+            It’s important to wake up after a complete 90 minute sleep cycle (instead of mid-cycle) in order to feel refreshed and improve your sleep quality. Just choose to set your bedtime or set your wake up time and fill out the fields above, then click the Calculate bedtime button or the Calculate wake-up time button. The calculator uses this information to determine the best bedtime or wake time for you that includes an optimal number of complete sleep cycles. This is sometimes referred to as a sleep REM calculator.
+        </p>
+    </div>
+     <!-- Bottom Ad Slot (initially hidden, shown on smaller screens or via JS) -->
+    <div id="ad-bottom1">  
+        <a href="nidra-abundance.html" rel="sponsored">
+            <img src="img/Nidra Abundances.png" alt="Advertisement" style="max-width: 100%; height: auto;">
+        </a>
+    </div>
+
+    <div id="terms">
+       <br><br><br><br><br>
+        <h2>Terms and Privacy Policy</h2>
+<p>This agreement describes the conditions and rules under which Random-stuff.ca ("our company", "we") offer you its services at Random-stuff.ca\sleep-calculator.html.
+
+This agreement will be governed by the laws of Canada, without reference to conflict of laws principles. You agree that any litigation relating to this agreement may only be brought in, and shall be subject to the jurisdiction of, any Court of Canada.
+</p>
+<br>
+<h3>Terms</h3>
+By using the services of Random-stuff.ca, you agree to observe all of the following conditions and rules:
+<li>Use of the Random-stuff.ca\lseep-calculator.html service is at your own risk.</li>
+<li>You bear full responsibility for any data transmitted to Random-stuff.ca servers.</li>
+<li>You agree not to use Random-stuff.ca to upload any illegal materials.</li>
+<li>You agree not to integrate any Random-stuff.ca service into your own or 3rd party applications.</li>
+<li>You may use the sleep calculator service for any purpose, personal or commercial.</li> 
+<li>We reserves the right to change or cease any of services at Random-stuff.ca, at any time.</li>
+<li>We reserves the right to change the terms of this agreement without notice.</li>
+<li>The sleep calculator service does not provide any guarantees.</li>
+<br>
+<h3>Privacy</h3>
+<li>In order to improve the quality of the sleep calculator service, we may save and analyze the metadata of your requests.</li>
+<li>Google collects data and uses cookies for ad personalization and measurement for this site. Learn how Google collects and uses data. You can turn off ad personalization at any time in your Google account settings. Also, we use cookies for statistical purposes. By using this site, you consent to our use of cookies.</li>
+</div>
+
+     </div>
+
+    <script>
+        // --- DOM Elements ---
+        const wakeHourSelect = document.getElementById('wake-hour');
+        const wakeMinuteSelect = document.getElementById('wake-minute');
+        const wakeAmPmSelect = document.getElementById('wake-ampm');
+        const calculateBedtimeBtn = document.getElementById('calculate-bedtime-btn');
+        const calculateWakeupBtn = document.getElementById('calculate-wakeup-btn');
+
+        const inputView = document.getElementById('input-view');
+        const bedtimeResultsView = document.getElementById('bedtime-results-view');
+        const wakeupResultsView = document.getElementById('wakeup-results-view');
+
+        const targetWakeTimeSpan = document.getElementById('target-wake-time-span');
+        const suggestedBedtimesDiv = document.getElementById('suggested-bedtimes');
+        const suggestedWakeTimesDiv = document.getElementById('suggested-wake-times');
+
+        const bedtimeGoBackBtn = document.getElementById('bedtime-go-back-btn');
+        const wakeupGoBackBtn = document.getElementById('wakeup-go-back-btn');
+
+        const alarmPopup = document.getElementById('alarm-popup');
+        const countdownTimerDiv = document.getElementById('countdown-timer');
+        const alarmCancelBtn = document.getElementById('alarm-cancel-btn');
+
+        // --- Constants ---
+        const FALL_ASLEEP_MINUTES = 15;
+        const SLEEP_CYCLE_MINUTES = 90;
+        const NUM_CYCLES_TO_SHOW = 6; // Show times for up to 6 cycles (9 hours)
+        const ALARM_DURATION_SECONDS = 120; // Beep for 120 seconds
+
+        // --- State Variables ---
+        let countdownInterval = null;
+        let alarmTimeout = null;
+        let alarmBeepInterval = null;
+        let audioContext = null; // For Web Audio API
+
+        // --- Helper Functions ---
+
+        // Format Date object to HH:MM AM/PM
+        function formatTime(date) {
+            if (!(date instanceof Date) || isNaN(date)) {
+                return "Invalid Time";
+            }
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            return `${hours}:${minutes} ${ampm}`;
+        }
+
+        // Format seconds into HH:MM:SS for countdown
+        function formatCountdown(totalSeconds) {
+            if (totalSeconds < 0) totalSeconds = 0;
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // Get the selected wake time as a Date object for today/tomorrow
+        function getWakeTimeDate() {
+            const hour = parseInt(wakeHourSelect.value);
+            const minute = parseInt(wakeMinuteSelect.value);
+            const ampm = wakeAmPmSelect.value;
+
+            let hours24 = hour;
+            if (ampm === 'PM' && hour !== 12) {
+                hours24 += 12;
+            } else if (ampm === 'AM' && hour === 12) { // Midnight case
+                hours24 = 0;
+            }
+
+            const now = new Date();
+            const wakeTime = new Date();
+            wakeTime.setHours(hours24, minute, 0, 0); // Set hours, minutes, seconds, ms
+
+            // If the calculated wake time is earlier than now, assume it's for the next day
+            if (wakeTime <= now) {
+                wakeTime.setDate(wakeTime.getDate() + 1);
+            }
+            return wakeTime;
+        }
+
+        // Populate select options
+        function populateTimeSelectors() {
+            // Hours (1-12)
+            for (let i = 1; i <= 12; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                wakeHourSelect.appendChild(option);
+            }
+            // Set default hour (e.g., 7)
+             wakeHourSelect.value = 7;
+
+
+            // Minutes (00, 05, 10... 55) - Or use 0-59 if preferred
+             for (let i = 0; i < 60; i += 5) { // Steps of 5 for simplicity
+                 const val = String(i).padStart(2, '0');
+                 const option = document.createElement('option');
+                 option.value = i;
+                 option.textContent = val;
+                 wakeMinuteSelect.appendChild(option);
+             }
+             // Set default minute (e.g., 30)
+             wakeMinuteSelect.value = 30;
+
+             // Default AM/PM based on current time or a common wake time
+             const currentHour = new Date().getHours();
+             wakeAmPmSelect.value = (currentHour >= 0 && currentHour < 12) ? 'AM' : 'PM'; // Default to AM if early morning, else PM
+             // Or set a fixed default:
+             wakeAmPmSelect.value = 'AM';
+             wakeHourSelect.value = 7;
+             wakeMinuteSelect.value = 30;
+
+
+        }
+
+        // Show a specific view and hide others
+        function showView(viewToShow) {
+           inputView.classList.add('hidden');
+           bedtimeResultsView.classList.add('hidden');
+            wakeupResultsView.classList.add('hidden');
+            viewToShow.classList.remove('hidden');
+
+            // Show/hide bottom ad based on view (optional)
+            //const adBottom = document.getElementById('ad-bottom');
+             //if (window.innerWidth <= 900) { // Only manage bottom ad if side ads are hidden
+                 //adBottom.style.display = (viewToShow === inputView) ? 'block' : 'flex';
+            // } else {
+                // adBottom.style.display = 'none'; // Keep hidden if side ads are visible
+            // }
+       }
+
+        // --- Alarm Sound Functions (Web Audio API) ---
+        function initAudioContext() {
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    console.error("Web Audio API is not supported in this browser.", e);
+                    alert("Sorry, the alarm sound cannot be played in your browser.");
+                }
+            }
+            return audioContext;
+        }
+
+        function playBeep() {
+            const context = initAudioContext();
+            if (!context) return;
+
+            const oscillator = context.createOscillator();
+            const gainNode = context.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(context.destination);
+
+            oscillator.type = 'sine'; // Beep sound
+            oscillator.frequency.setValueAtTime(880, context.currentTime); // Frequency in Hz (A5 note)
+            gainNode.gain.setValueAtTime(0.5, context.currentTime); // Volume (0 to 1)
+
+            oscillator.start(context.currentTime);
+            // Stop the single beep after a short duration
+            oscillator.stop(context.currentTime + 0.2); // Beep for 0.2 seconds
+        }
+
+         function startAlarmSound() {
+             if (!initAudioContext()) return; // Ensure context is ready
+             stopAlarmSound(); // Stop any previous alarm sound/interval
+
+             // Play immediately once
+             playBeep();
+             // Then play every second
+             alarmBeepInterval = setInterval(playBeep, 1000); // Repeat beep every 1 second
+
+             // Automatically stop after ALARM_DURATION_SECONDS
+             setTimeout(stopAlarmSound, ALARM_DURATION_SECONDS * 1000);
+         }
+
+        function stopAlarmSound() {
+            clearInterval(alarmBeepInterval);
+            alarmBeepInterval = null;
+            // Optional: Close audio context if not needed anymore to save resources
+            // if (audioContext && audioContext.state !== 'closed') {
+            //     audioContext.close();
+            //     audioContext = null;
+            // }
+             alarmCancelBtn.textContent = 'Cancel'; // Reset button text
+             alarmCancelBtn.style.backgroundColor = '#d9534f'; // Reset color
+             //alarmPopup.classList.add('hidden'); // Hide popup when stopped
+        }
+
+
+        // --- Event Handlers ---
+
+        calculateBedtimeBtn.addEventListener('click', () => {
+            const wakeTime = getWakeTimeDate();
+            targetWakeTimeSpan.textContent = formatTime(wakeTime);
+
+            suggestedBedtimesDiv.innerHTML = ''; // Clear previous results
+
+            let recommendedCount = 0;
+            for (let i = NUM_CYCLES_TO_SHOW; i >= 1; i--) {
+                const totalSleepMinutes = i * SLEEP_CYCLE_MINUTES;
+                const bedtime = new Date(wakeTime.getTime() - (totalSleepMinutes + FALL_ASLEEP_MINUTES) * 60 * 1000);
+
+                 const optionDiv = document.createElement('div');
+                 optionDiv.classList.add('time-option');
+
+                 const timeSpan = document.createElement('span');
+                 timeSpan.textContent = formatTime(bedtime);
+                 optionDiv.appendChild(timeSpan);
+
+                 // Add "SUGGESTED" label for 5th and 6th cycles (7.5 / 9 hours)
+                 if (i === 6 || i === 5) {
+                     const suggestionLabel = document.createElement('div');
+                     suggestionLabel.classList.add('suggestion-label');
+                     suggestionLabel.textContent = 'SUGGESTED';
+                     optionDiv.appendChild(suggestionLabel);
+                     recommendedCount++;
+                 }
+
+
+                 const setAlarmBtn = document.createElement('button');
+                 setAlarmBtn.textContent = 'Set reminder';
+                 setAlarmBtn.classList.add('set-alarm-btn');
+                 // Store the exact bedtime (including date) for the alarm
+                 setAlarmBtn.dataset.alarmTime = bedtime.toISOString();
+                 optionDiv.appendChild(setAlarmBtn);
+
+                 suggestedBedtimesDiv.appendChild(optionDiv);
+            }
+
+            showView(bedtimeResultsView);
+        });
+
+        calculateWakeupBtn.addEventListener('click', () => {
+            const now = new Date();
+            // Calculate the time the user would actually fall asleep
+            const fallAsleepTime = new Date(now.getTime() + FALL_ASLEEP_MINUTES * 60 * 1000);
+
+            suggestedWakeTimesDiv.innerHTML = ''; // Clear previous
+
+            for (let i = 1; i <= NUM_CYCLES_TO_SHOW; i++) {
+                 const totalSleepNeeded = i * SLEEP_CYCLE_MINUTES;
+                 const wakeUpTime = new Date(fallAsleepTime.getTime() + totalSleepNeeded * 60 * 1000);
+
+                 const optionDiv = document.createElement('div');
+                 optionDiv.classList.add('time-option');
+
+                 const timeSpan = document.createElement('span');
+                 timeSpan.textContent = formatTime(wakeUpTime);
+                 optionDiv.appendChild(timeSpan);
+
+                 // Add "SUGGESTED" label for 5th and 6th cycles
+                 if (i === 5 || i === 6) {
+                     const suggestionLabel = document.createElement('div');
+                     suggestionLabel.classList.add('suggestion-label');
+                     suggestionLabel.textContent = 'SUGGESTED';
+                     optionDiv.appendChild(suggestionLabel);
+                 }
+
+                 // Note: Setting an alarm for wake-up times isn't implemented here
+                 // as the primary flow is setting a *bedtime* alarm.
+                 // You could add "Set Reminder" buttons if needed.
+
+                 suggestedWakeTimesDiv.appendChild(optionDiv);
+            }
+             showView(wakeupResultsView);
+        });
+
+        bedtimeGoBackBtn.addEventListener('click', () => showView(inputView));
+        wakeupGoBackBtn.addEventListener('click', () => showView(inputView));
+
+        // Event delegation for "Set Alarm" buttons
+        suggestedBedtimesDiv.addEventListener('click', (event) => {
+            if (event.target.classList.contains('set-alarm-btn')) {
+                const alarmTimeString = event.target.dataset.alarmTime;
+                if (!alarmTimeString) return;
+
+                const alarmTime = new Date(alarmTimeString);
+                const now = new Date();
+
+                if (alarmTime <= now) {
+                    alert("Cannot set an alarm for a time in the past.");
+                    return;
+                }
+
+                // Clear any existing timers/intervals
+                clearTimeout(alarmTimeout);
+                clearInterval(countdownInterval);
+                stopAlarmSound(); // Ensure any previous beeping stops
+
+                 // --- Initialize Audio Context on user interaction ---
+                 // Browsers often require user interaction to start AudioContext
+                 if (!audioContext || audioContext.state === 'suspended') {
+                     initAudioContext()?.resume();
+                 }
+                 // ---
+
+                const timeDifferenceSeconds = Math.round((alarmTime.getTime() - now.getTime()) / 1000);
+
+                // Update countdown immediately
+                countdownTimerDiv.textContent = formatCountdown(timeDifferenceSeconds);
+                alarmCancelBtn.textContent = 'Cancel'; // Ensure correct button text
+                alarmCancelBtn.style.backgroundColor = '#d9534f'; // Reset to cancel color
+                alarmPopup.classList.remove('hidden');
+
+
+                // Start countdown interval
+                let remainingSeconds = timeDifferenceSeconds;
+                countdownInterval = setInterval(() => {
+                    remainingSeconds--;
+                    countdownTimerDiv.textContent = formatCountdown(remainingSeconds);
+                    if (remainingSeconds <= 0) {
+                        clearInterval(countdownInterval);
+                        countdownInterval = null;
+                        // Don't play alarm here, wait for the timeout
+                    }
+                }, 1000);
+
+                // Set timeout for the actual alarm
+                alarmTimeout = setTimeout(() => {
+                    clearInterval(countdownInterval); // Ensure countdown stops if slightly off
+                    countdownInterval = null;
+                    alarmTimeout = null;
+                    countdownTimerDiv.textContent = "00:00:00"; // Show zero when ringing
+                    alarmCancelBtn.textContent = 'Stop Alarm';
+                    alarmCancelBtn.style.backgroundColor = '#f0ad4e'; // Orange for stop
+                    startAlarmSound();
+                }, timeDifferenceSeconds * 1000);
+            }
+        });
+
+        // Cancel/Stop Alarm Button
+        alarmCancelBtn.addEventListener('click', () => {
+            clearTimeout(alarmTimeout);
+            clearInterval(countdownInterval);
+            stopAlarmSound(); // This also hides the popup and resets text
+
+            alarmTimeout = null;
+            countdownInterval = null;
+            alarmPopup.classList.add('hidden'); // Ensure popup is hidden
+            console.log("Alarm cancelled.");
+        });
+
+
+        // --- Initial Setup ---
+        populateTimeSelectors();
+        showView(inputView); // Show the input view initially
+
+        // Adjust bottom ad visibility based on initial screen size
+        //if (window.innerWidth <= 900) {
+             //document.getElementById('ad-bottom').style.display = 'none'; // Hide initially as input view is shown
+        //}
+
+
+    </script>
+
+</body>
+</html>
