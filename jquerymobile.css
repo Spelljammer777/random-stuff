@@ -3986,7 +3986,7 @@ input.ui-slider-input {
   font-weight: 700;
   margin: 0;
   padding: 7px;
-  width: 40px;
+  width: 63px;
   height: 20px;
   line-height: 20px;
   border-width: 1px;
@@ -4012,7 +4012,7 @@ input.ui-slider-input {
   border-width: 1px;
   border-style: solid;
   height: 15px;
-  margin: 0 15px 0 76px;
+  margin: 0 15px 0 93px;
   top: 6px;
 }
 .ui-slider-track.ui-mini {
