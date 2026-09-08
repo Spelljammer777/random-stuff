@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE HTML>
+<html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="jquerymobile.css">
+<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+<script src="jquery-1.11.3.min.js"></script>
+<script src="jquery.mobile-1.4.5.min.js"></script>
+<style>
+@charset ï¿½UTF-8?;
+body {
+  text-align: center;
+  //background-image: url("img/sky.jpg");
+  background-color: #AFCBE8;
+  color:#000000;
+  font-family: verdana;
+  font-size: 14pt;
+  color: #ffffff;
+  line-height:1.3em;
+  letter-spacing:1px;
+}
+
+div.ui-slider {
+  margin: 1px;
+  
+}
+
+
+#program {
+  width: 99%;
+  min-width: 300px;
+  max-width: 640px;
+  background-color: #155B73;
+  border: 1px solid black;
+}
+
+#note {
+  font-size: 10pt;
+}
+
+#textblock   {
+  font-size: 15pt;
+  color: black;
+  background: white;
+  width: 91%;
+  padding: 3px;
+  margin: 6% 0 0 3%;
+  border-radius: 7px;
+  text-align: left;
+}
+#tableleft {
+text-align: left;
+width:140px;
+font-size: 11pt;
+}
+
+#compute {
+  border-radius: 25px;
+  box-shadow: 10px 10px 10px white;
+  width: 600px;
+  background-color: #333333;
+  border: 2px solid white;
+}
+}
+
+</style>
+
+<title>VAWT Windmill Calculator by Richard Lewis</title>
+
+
+</head>
+<script language="JavaScript">
+
+//
+// **************************************************
+// * Savonious Windmill Calculator by Richard Lewis *
+// * @ http://RL-Publishing.com                     *
+// * last updated Feb 24, 2018                      *
+// **************************************************
+//
+document.bgColor="green"
+<!--HIDE
+function processData(form) {
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var winwidth = ($("form").width()) - 30;
+ctx.canvas.width  = winwidth;
+var voltbatt = $('input[name=voltage1]').val();
+var weather = 1
+var wind = $('input[name=wind1]').val();
+var height = $('input[name=height1]').val();
+var wide = $('input[name=wide1]').val();
+var gear = $('input[name=gear1]').val();
+var wired = 1;
+var motors = 1;
+var tsr = .8;
+var amps = $('input[name=amps1]').val();
+var volts = $('input[name=volts1]').val();
+var rpmmotor = $('input[name=rpmmotor1]').val();
+var eff = $('input[name=eff1]').val() * .01;
+//var bladeeff = .2;
+var bladeeff = $('input[name=bladeeff1]').val();
+var cutinmin = 4;
+var cutinmax = 10;
+var textstuff = document.getElementById("textblock");
+var status = 1;
+
+// ********perform calculations********************
+var cutinrpm = Math.round(voltbatt/volts*(rpmmotor/gear));
+var rpm = Math.round((1056*wind*tsr)/(wide*3.141593));
+var cutinmph = (cutinrpm*wide*3.141593)/(1056*tsr);
+cutinmph = (parseInt(cutinmph*10))/10;
+var watts = parseInt(1.207 * .5 * ((wide)*0.0254) * (height*0.0254) * (wind * 0.447) * (wind * 0.447)* (wind * 0.447) * weather * bladeeff * eff);
+var ampbatt = (parseInt((watts / voltbatt)*10))/10 ;
+var ampmax = (parseInt(amps * weather * 2 * motors * wired * 10))/10;
+wattsmotor = parseInt(amps * weather * 2 * voltbatt * motors * wired);
+volts = volts * wired;
+cutinrpm = Math.round(cutinrpm * wired);
+cutinmph = Math.round(cutinmph * wired);
+
+// ************** clean yellow warnings **********
+textstuff.style.backgroundColor = 'white';
+textstuff.innerHTML = "Notice, the max amps the motor can withstand is higher than its rated capacity. This is due to the cooling effect of the wind!\n";
+
+// ************** error output section ************
+
+if (wattsmotor < watts && cutinmph < wind)
+  {
+  
+  textstuff.innerHTML = "1) The motor selected could burn up in this wind! You will need to use a circuit breaker if you expect winds of this magnitude (This only applies to VAWTs. Never use a circuit breaker with a HAWT as it could spin out of control).<br><br>2)  You could also decrease blade diameter. <br><br>3) Another option is to use a motor with a higher amp rating or you can use a higher voltage battery bank.\n";
+  textstuff.style.backgroundColor = 'yellow';
+  status = 0;
+  }
+if (cutinmph > cutinmax)
+  {
+  textstuff.style.backgroundColor = 'yellow';
+  textstuff.innerHTML = "1) The cut in speed is too high! The motor needs to be geared up or the blade width should be decreased to speed up output. <br><br>2) Another option is to use a motor with lower rpm rating and a higher voltage rating. <br><br>3) Or, you can use a lower battery voltage.\n"
+  status = 0;
+  }
+if (cutinmph < cutinmin)
+  {
+  textstuff.style.backgroundColor = 'yellow';
+  textstuff.innerHTML = "1) The cut in speed is too low! The motor needs to be geared up less or the blade width should be increased to slow down output. <br><br>2) Another option is to use a motor with higher rpm rating and a lower voltage rating. <br><br>3) Or, you can use a higher battery voltage.\n"
+  status = 0;
+  }
+if (wind>200)
+  {
+  textstuff.style.backgroundColor = 'yellow';
+  textstuff.innerHTML = "Whatever! Do you live on Jupiter? Try a smaller windspeed.\n";
+  submitOK="false";
+  status = 0;
+  }
+
+//===canvas draw=====
+ctx.beginPath();
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+canvas.style.backgroundColor = "rgba(0, 0, 0, 1)";
+
+//====draw verical grid lines=====
+ctx.beginPath();
+
+for (var i = 50; i < winwidth; i+=(winwidth-50)/10) {
+  ctx.lineWidth="1";
+  ctx.strokeStyle="#222";
+  ctx.moveTo(i,0);
+  ctx.lineTo(i,270);
+  ctx.stroke();
+}
+
+
+//====draw horizontal grid lines=====
+  ctx.lineWidth="1";
+  ctx.strokeStyle="#222";
+for (var i = 30; i < 300; i+=30) {
+   ctx.moveTo(50,i);
+   ctx.lineTo(winwidth,i);
+   ctx.stroke();
+}
+
+//===draw the arrow====
+ctx.beginPath();
+ctx.lineCap="round";
+ctx.strokeStyle="yellow";
+ctx.lineWidth="3";
+ctx.moveTo(winwidth-25,40);
+ctx.lineTo(winwidth-5,7);
+ctx.lineTo(winwidth-13,9);
+ctx.moveTo(winwidth-5,7);
+ctx.lineTo(winwidth-3,14);
+ctx.rect(winwidth-140,52,winwidth-3,97);
+ctx.stroke();
+
+//====draw verical marks and watts at bottom=====
+ctx.beginPath();
+var ct = Math.round(watts/10);
+ctx.font="14px Arial";
+ctx.fillStyle="yellow";
+var w = 0;
+for (var i = 50; i < winwidth; i+=(winwidth-50)/10) {
+  ctx.strokeStyle="yellow";
+  ctx.lineWidth="3";
+  ctx.moveTo(i,274);
+  ctx.lineTo(i,270);
+  ctx.stroke();
+
+  var n = w.toString().length;
+  var offset = n * 3.9;
+  ctx.fillText(w,i - offset,290);
+  w = w + ct;
+}
+
+//===draw the curve====
+count1 = 230;
+ctx.beginPath();
+ctx.lineCap="round";
+ctx.strokeStyle="#00FF00";
+if (status == 0) {ctx.strokeStyle="#FF0000";}
+ctx.lineWidth="2";
+count1 = 276 - (Math.round(300/wind) * cutinmph);
+ctx.moveTo(50, count1);
+ctx.quadraticCurveTo(80, 70, winwidth, 2);
+ctx.stroke();
+/*for (var i = 50; i < winwidth +50; i+=winwidth/29) {
+  ctx.lineTo(i,count1);
+  ctx.moveTo(i,count1);
+  ctx.stroke();
+  count1 = count1 * .8;
+}*/
+
+//====fill in text=====
+ctx.beginPath();
+ctx.fillStyle="yellow";
+ctx.lineWidth="1";
+ctx.font="20px Arial";
+
+//==max watts label===
+if (watts > wattsmotor) {
+  ctx.fillStyle="red";
+  }
+ctx.fillText((Math.round(watts)) + " Watts",winwidth - 109,72);
+ctx.font="14px Arial";
+ctx.fillText("@ " + wind + " mph wind",winwidth - 125,90);
+ctx.fillText("@ " + rpm + " RPMs",winwidth - 125,110);
+ctx.fillText("@ " + ampbatt + " Amps",winwidth - 125,130);
+ctx.font="17px Arial";
+ctx.fillStyle="#AAA";
+if (watts > wattsmotor) {
+  ctx.fillStyle="red";
+  }
+ctx.fillText("Max Possible Watts = " + wattsmotor ,winwidth - 235,170);
+ctx.fillText("Max Possible Amps = " + ampmax,winwidth - 235,190);
+ctx.fillStyle="yellow";
+
+//==cutin details label===
+  if (cutinmph > cutinmax || cutinmph < cutinmin) {
+  ctx.fillStyle="orange";
+  }
+ctx.fillText("Cutin @ " + cutinmph + " mph ",70,220);
+ctx.fillText("@ " + cutinrpm + " RPMs ",70,240);
+ctx.fillStyle="yellow";
+
+//==wind speed label on left side==
+ct = wind/9;
+w = wind - ct;
+ctx.font="15px Arial";
+ctx.fillText("MPH",7,15);
+for (var i = 33; i < 300; i+=30) {
+  ctx.fillText((Math.round(w)),16,i);
+  w -= ct;
+ }
+
+//==Watts label on bottom==
+ctx.font="25px Arial";
+ctx.fillText("Watts",(winwidth/2)-10,260);
+}
+
+
+// *************************************************
+// *************************************************
+// *************************************************
+// *************************************************
+//Stop Hiding-->
+</script>
+
+
+
+
+<body onload="processData(form)" onresize="processData(form)">
+<center>
+<div style="text-align: left;"></div>
+<div id="program">
+
+<form style="margin-left: 0px; width: 98%;" name="form">
+<div style="text-align: left; margin-left: 0px; width: 95%;">
+<h1 style="text-align: center; margin-left: 0px; width: 100%; color: rgb(255, 255, 102);" )="">VAWT Calculator</h1>
+</div>
+<p style="text-align: center; margin-left: 0px; width: 100%; color: rgb(255, 255, 102);" )="">
+<font color="yellow"><span style="font-weight: bold; color: rgb(255, 102, 102);"></span></font>
+<div style="text-align: center; margin-left: 0px; width: 100%;color:yellow">
+<table style="width: 100%" >
+<tbody>
+<tr>
+<td id="tableleft">Battery Voltage:</td>
+<td><input type="range" name="voltage1" min="12" max="240" value="12" step="12" data-highlight="true" onchange="processData(this.form)" /></td>
+</tr>
+<tr>
+<td id="tableleft">Width (inches):</td>
+<td><input type="range" name="wide1" min="6" max="96" value="36" step="1" data-highlight="true" onchange="processData(this.form)" /></td>
+</tr>
+<tr>
+<td id="tableleft">Height (inches):</td>
+<td><input type="range" name="height1" min="6" max="120" value="72" step="1" data-highlight="true" onchange="processData(this.form)" /></td>
+</tr>
+<tr>
+<td id="tableleft">Gear Ratio:</td>
+<td><input type="range" name="gear1" min="1" max="20" value="5" step="1" data-highlight="true" onchange="processData(this.form)" /></td>
+</tr>
+<tr>
+<td id="tableleft">Blade Efficiency:</td>
+<td><input type="range" name="bladeeff1" min=".1" max=".45" value=".2" step="0.05" data-highlight="true" onchange="processData(this.form)" /></td>
+</tr>
+<tr>
+<td id="tableleft">Wind (mph):</td>
+<td><input type="range" name="wind1" min="20" max="50" value="30" step="1" data-highlight="true" onchange="processData(this.form)" /></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<br>
+<canvas id="myCanvas" width="600" height="300"
+style="border:2px solid #d3d3d3;box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.8), 0 8px 24px 0 rgba(0, 0, 0, 0.79);">
+Your browser does not support the canvas element.
+</canvas>
+<div style="width: 40%">
+<input id="button1" value="RESET" name="reset"  onclick="location.reload()" type="button">
+
+
+</div>
+
+<div style="text-align: center; margin-left: 0px; width: 100%;color:yellow">
+<table style="width: 100%" >
+<tbody>
+<tr>
+<td id="tableleft">Motor Amps:</td>
+<td><input type="range" name="amps1" min="1" max="99" value="17" step="0.5" data-highlight="true" onchange="processData(this.form)" /></td>
+</tr>
+<tr>
+<td id="tableleft">Motor RPM:</td>
+<td><input type="range" name="rpmmotor1" min="400" max="6500" value="1700" step="20" data-highlight="true" onchange="processData(this.form)" /></td>
+</tr>
+<tr>
+<td id="tableleft">*Generator Efficiency:</td>
+<td><input type="range" name="eff1" min="5" max="100" value="50" step="5" data-highlight="true" onchange="processData(this.form)" /></td>
+</tr>
+<tr>
+<td id="tableleft">Motor Voltage:</td>
+<td><input type="range" name="volts1" min="12" max="240" value="130" step="2" data-highlight="true" onchange="processData(this.form)" /></td>
+</tr>
+</tbody>
+</table>
+<p id="note">
+* DC=50%, magnetic alt=75%, AC induction=90%
+</p>
+<div id="textblock">
+</div>
+<h3>SIMPLE NEW WAY TO ESCAPE THE POWER MONOPOLY</h3>
+How to Slash Your Power Bill by up to 75% (or more)<br>
+in less than 30 days - Guaranteed!<br>
+</div>
+
+<div style="text-align: center;"><a href="http://d0c72fh5hmldgz59tkw8yzqbfd.hop.clickbank.net/?tid=BLOG-MAIN-BOX-SET"><img style="border: 1px solid ;border-radius: 7px; width: 290px; height: 280px;box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.8), 0 8px 24px 0 rgba(0, 0, 0, 0.79);" alt="" src="DIYhomeEnergyBox.png" /></a><br style="font-family: Arial;" /><br>
+<small><span style="color: rgb(204, 204, 204);">by
+Richard Lewis @ RL-Publishing.com copyright 2009-2019</span></small>
+</div>
+</form>
+<br><br>
+</div>
+</center>
+</body>
+</html>
